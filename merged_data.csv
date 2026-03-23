@@ -1,0 +1,374 @@
+Bet,Team,Total,ExactBet,Date,Market,Other,LineTaken,Edge,BetType,RichStake,Grade,Profit
+221,Purdue ,False,Purdue ml L,2025-12-06,112,-142,133,3.8,moneyline,525.0,L,-525
+227,Utah ,False,Utah Jazz ml L,2025-12-08,1953,-11372,15000,607.2,moneyline,20.0,L,-20
+230,Denver ,True,Denver Nuggets u253.5 L,2025-12-11,103,128,120,16.4,total,130.0,W,156
+231,North ,True,North Dakota State u149.5 L,2025-12-11,-142,107,104,11.9,total,230.0,W,239
+232,Butler ,False,Butler ml L,2025-12-13,-103,-123,133,11.6,moneyline,882.0,W,1173
+233,Cal ,True,Cal Riverside u157.5 L,2025-12-13,-115,-102,125,15.7,total,112.0,W,140
+234,Central ,False,Central Arkansas +25.5 L,2025-12-13,-116,-112,125,13.6,spread,2453.0,W,3119
+235,Central ,True,Central Arkansas u153.5 L,2025-12-13,-110,-122,128,11.3,total,384.0,L,-384
+236,Chattanooga ,True,Chattanooga o164.5 L,2025-12-13,-123,-108,116,11.3,total,606.0,W,702
+237,Dayton ,False,Dayton -36.5 L,2025-12-13,-114,-110,116,8.9,spread,606.0,L,-606
+238,Delaware ,False,Delaware ml L,2025-12-13,-152,115,112,19.7,moneyline,157.0,L,-157
+239,Drake ,False,Drake +3.5 L,2025-12-13,117,-317,435,44.0,spread,361.0,L,-361
+240,Florida ,False,Florida State ml L,2025-12-13,230,-299,310,18.1,moneyline,264.0,L,-264
+241,George ,False,George Mason -13.5 L,2025-12-13,-114,-116,118,8.6,spread,208.0,L,-208
+242,Georgia ,False,Georgia State ml L,2025-12-13,204,-259,279,15.6,moneyline,755.0,W,1402
+243,Grand ,False,Grand Canyon -31.5 L,2025-12-13,-115,-115,118,9.1,spread,417.0,L,-417
+244,Indiana ,False,Indiana +7.5 L,2025-12-13,104,-138,138,9.0,spread,170.0,L,-170
+245,Jacksonville ,False,Jacksonville State ml L,2025-12-13,136,-160,205,24.4,moneyline,299.0,L,-299
+246,Kansas ,False,Kansas State -5.5 L,2025-12-13,-119,-112,155,29.3,spread,1483.0,W,2298
+247,Longwood ,False,Longwood ml L,2025-12-13,-115,-111,100,0.8,moneyline,900.0,L,-900
+248,Marquette ,False,Marquette +20.5 L,2025-12-13,-102,-102,116,8.0,spread,212.0,W,245
+249,Mercer ,False,Mercer +5.5 L,2025-12-13,-132,100,118,16.0,spread,1949.0,L,-1949
+250,Michigan ,False,Michigan State ml L,2025-12-13,-506,388,-294,7.6,moneyline,2415.0,W,821
+251,Michigan ,True,Michigan State u151.5 L,2025-12-13,-120,-105,123,13.2,total,1057.0,W,1261
+252,NC ,False,NC State ml L,2025-12-13,350,-520,650,57.1,moneyline,353.0,L,-353
+253,North ,True,North Dakota State o190.5 L,2025-12-13,-135,102,118,17.1,total,596.0,W,703
+254,Ohio ,False,Ohio State ml L,2025-12-13,4,-128,163,22.3,moneyline,297.0,W,467
+255,Oklahoma ,False,Oklahoma State +4.5 L,2025-12-13,-105,-121,136,14.4,spread,827.0,L,-827
+256,Oklahoma ,True,Oklahoma State u160.5 L,2025-12-13,-121,-110,121,13.1,total,794.0,mix,108
+257,Oregon ,False,Oregon -24.5 L,2025-12-13,-122,-113,118,11.8,spread,9676.0,W,11495
+258,Penn ,False,Penn State +16.5 L,2025-12-13,-109,-117,131,13.8,spread,488.0,W,643
+259,Providence ,False,Providence ml L,2025-12-13,189,-236,267,21.0,moneyline,673.0,L,-673
+260,Purdue ,False,Purdue -27.5 L,2025-12-13,-111,-119,130,13.1,spread,692.0,W,899
+261,Rice ,False,Rice ml L,2025-12-13,420,-650,700,45.3,moneyline,167.0,W,1169
+262,Robert ,False,Robert Morris ml L,2025-12-13,-390,280,-189,14.9,moneyline,774.0,W,409
+263,Rutgers ,False,Rutgers +15.5 L,2025-12-13,-107,-126,128,9.7,spread,183.0,L,-183
+264,Rutgers ,True,Rutgers u128.5 L,2025-12-13,-115,-115,130,15.0,total,108.0,L,-108
+265,Saint ,False,Saint Peter's +11.5 L,2025-12-13,-112,-116,123,10.6,spread,7559.0,W,9333
+266,Saint ,True,Saint Peter's u124.5 L,2025-12-13,120,-120,120,0.0,total,1173.0,L,-1173
+267,San ,False,San Francisco +14.5 L,2025-12-13,-132,4,10,12.0,spread,427.0,W,465
+268,Santa ,False,Santa Clara ml L,2025-12-13,138,-185,185,12.0,moneyline,443.0,L,-443
+269,Toledo ,False,Toledo ml L,2025-12-13,-106,-120,133,13.1,moneyline,308.0,L,-308
+270,UC ,True,UC Davis u157.5 L,2025-12-13,9,-122,126,5.4,total,2099.0,L,-2099
+271,Utah ,False,Utah Valley -15.5 L,2025-12-13,125,125,118,9.0,spread,208.0,L,-208
+272,UTSA ,False,UTSA +27.5 L,2025-12-13,-114,112,112,12.4,spread,628.0,W,703
+273,West ,True,West Virginia o142.5 L,2025-12-13,-124,-111,123,14.3,total,400.0,W,492
+274,Bethune ,True,Bethune Cookman u145.5 L,2025-12-14,-140,101,102,9.0,total,588.0,W,599
+275,Campbell ,False,Campbell ml L,2025-12-14,130,-130,163,14.3,moneyline,613.0,W,999
+276,Charlotte ,False,Charlotte +1.5 L,2025-12-14,-112,112,110,10.9,spread,590.0,L,-590
+277,Los ,False,Los Angeles Lakers ml L,2025-12-14,-136,106,125,22.1,moneyline,656.0,W,820
+278,Monmouth ,False,Monmouth +1.5 L,2025-12-14,-141,105,105,11.8,spread,572.0,L,-572
+279,Sacramento ,False,Sacramento Kings ml L,2025-12-14,460,-460,460,0.0,moneyline,267.0,L,-267
+280,Troy ,False,Troy +3.5 L,2025-12-14,-139,103,117,17.5,spread,555.0,W,649
+281,Washington ,True,Washington State o130.5 L,2025-12-14,-132,100,114,13.9,total,216.0,L,-216
+282,Detroit ,True,Detroit Pistons u222.5 L,2025-12-15,155,-171,166,2.2,total,181.0,W,280
+283,Cleveland ,False,Cleveland Cavaliers -9.5 L,2025-12-25,-116,-110,110,6.3,spread,736.4,L,-736
+284,Cleveland ,True,Cleveland Cavaliers u246 L,2025-12-25,-102,-126,155,21.2,total,373.1,L,-373
+285,Dallas ,False,Dallas Mavericks ml L,2025-12-25,1010,-2103,4000,253.6,moneyline,17.5,L,-17
+286,Golden ,False,Golden State Warriors q4 ml L,2025-12-25,154,-205,205,12.7,moneyline,119.0,L,-119
+287,Houston ,False,Houston Rockets -9.5 L,2025-12-25,102,-132,140,9.3,spread,3565.1,W,5030
+288,Houston ,True,Houston Rockets o213.5 L,2025-12-25,-130,101,116,14.9,total,434.0,W,503
+289,Detroit ,False,Detroit Pistons ml L,2025-12-26,128,-150,163,11.1,moneyline,774.2,L,-773
+290,Detroit ,True,Detroit Pistons u264.5 L,2025-12-26,-105,-123,125,10.1,total,525.0,W,660
+291,Colorado ,False,Colorado ml L,2025-12-28,280,-253,335,16.8,moneyline,80.0,L,-80
+292,Detroit ,False,Detroit Pistons 3q ml L,2025-12-28,-127,6,3,8.1,moneyline,2434.0,mix,1755
+293,Memphis ,False,Memphis Grizzlies o120.5 1h L,2025-12-28,-181,146,-127,9.6,1h total,700.0,L,-700
+294,Philadelphia ,True,Philadelphia 76ers u229.5 L,2025-12-28,-119,-6,123,14.0,total,1212.0,L,-1212
+295,Sacramento ,False,Sacramento Kings +21.5 L,2025-12-28,-130,108,2,10.4,spread,3544.0,mix,366
+296,Washington ,False,Washington Wizards 1h ml L,2025-12-28,-159,124,-114,8.7,1h moneyline,750.0,W,657
+297,Air ,False,Air Force +40.5 L,2026-01-24,-139,105,104,10.9,spread,455.0,L,-455
+298,Arizona ,False,Arizona -19.5 L,2026-01-24,-175,130,104,21.2,spread,297.5,W,309
+299,Auburn ,True,Auburn o141.5 L,2026-01-24,100,-120,125,7.6,total,560.0,W,700
+300,Binghamton ,False,Binghamton ml L,2026-01-24,294,-294,400,26.9,moneyline,122.5,L,-122
+301,Boston ,False,Boston College +6.5 L,2026-01-24,102,-110,132,12.7,spread,367.5,W,485
+302,Boston ,True,Boston Celtics u236.5 L,2026-01-24,0,-122,128,8.5,total,1715.0,W,2182
+303,Bowling ,False,Bowling Green +2.5 L,2026-01-24,-106,106,118,12.2,spread,262.5,W,309
+304,Brown ,False,Brown ml L,2026-01-24,305,-450,255,-17.7,moneyline,175.0,L,-175
+305,Brown ,True,Brown o131.5 L,2026-01-24,-117,105,-2,4.1,total,630.0,L,-630
+306,California ,True,California u148.5 L,2026-01-24,-122,-108,114,10.0,total,262.5,W,299
+307,Campbell ,False,Campbell ml L,2026-01-24,100,-125,128,8.0,moneyline,367.5,L,-367
+308,Central ,False,Central Michigan +2.5 L,2026-01-24,-125,-105,120,14.5,spread,402.5,L,-402
+309,Charlotte ,False,Charlotte Hornets -12.5 L,2026-01-24,-133,108,-104,10.7,spread,7008.4,L,-7007
+310,Chicago ,False,Chicago Bulls +1.5 L,2026-01-24,-171,137,-134,4.6,spread,2100.0,W,1567
+311,Clemson ,True,Clemson u140.5 L,2026-01-24,-5,-125,116,3.7,total,525.0,W,608
+312,Cleveland ,True,Cleveland Cavaliers u218.5 L,2026-01-24,109,-137,143,10.0,total,840.0,L,-840
+313,Colgate ,False,Colgate ml L,2026-01-24,198,-240,255,14.4,moneyline,175.0,W,446
+314,Columbia ,False,Columbia ml L,2026-01-24,125,-165,180,16.6,moneyline,262.5,W,472
+315,Davidson ,False,Davidson ml L,2026-01-24,-176,129,110,40.0,moneyline,1032.5,mix,-113
+316,Dayton ,True,Dayton o150.5 L,2026-01-24,-150,104,107,13.9,total,280.0,W,299
+317,Drake ,False,Drake -9.5 L,2026-01-24,-156,119,2,14.6,spread,595.0,W,607
+318,Eastern ,False,Eastern Kentucky ml L,2026-01-24,325,-490,600,54.5,moneyline,70.0,L,-70
+319,Elon ,False,Elon ml L,2026-01-24,188,-255,260,17.3,moneyline,175.0,L,-175
+320,Florida ,False,Florida ml L,2026-01-24,-128,100,116,11.4,moneyline,4147.5,mix,-3148
+321,Florida ,True,Florida State u160.5 L,2026-01-24,100,-100,108,4.0,total,280.0,L,-280
+322,Georgia ,False,Georgia State ml L,2026-01-24,138,-179,170,6.8,moneyline,280.0,W,476
+323,Georgia ,True,Georgia u155.5 L,2026-01-24,-130,102,125,19.9,total,245.0,W,306
+324,Grand ,False,Grand Canyon -3.5 L,2026-01-24,-120,-107,100,2.7,spread,490.0,W,490
+325,Houston ,True,Houston u179.5 L,2026-01-24,34,-149,151,5.0,total,420.0,mix,70
+326,Indiana ,False,Indiana State +1.5 L,2026-01-24,-110,100,112,8.5,spread,297.5,L,-297
+327,Iona ,False,Iona -9.5 L,2026-01-24,-113,113,-113,0.0,spread,420.0,L,-420
+328,Jacksonville ,False,Jacksonville ml L,2026-01-24,162,-220,185,1.7,moneyline,262.5,W,485
+329,Kent ,False,Kent State ml L,2026-01-24,-174,136,-115,12.1,moneyline,1452.5,W,1448
+330,Kentucky ,False,Kentucky -7.5 L,2026-01-24,-113,-102,118,11.7,spread,262.5,W,309
+331,Lafayette ,False,Lafayette +2.5 L,2026-01-24,95,-210,258,16.7,spread,525.0,L,-524
+332,LSU ,True,LSU o167.5 L,2026-01-24,-110,-120,143,19.0,total,685.3,L,-685
+333,Manhattan ,True,Manhattan o119.5 L,2026-01-24,-108,108,112,10.1,total,280.0,W,313
+334,Maryland ,False,Maryland +41.5 L,2026-01-24,110,-110,119,4.6,spread,507.5,L,-507
+335,Memphis ,False,Memphis +16.5 L,2026-01-24,-225,156,-21,17.8,spread,1172.5,mix,-274
+336,Mercer ,False,Mercer +2.5 L,2026-01-24,-140,114,100,11.0,spread,315.0,L,-315
+337,Miami ,False,Miami Florida -10.5 L,2026-01-24,-110,-121,125,10.0,spread,245.0,L,-245
+338,Michigan ,False,Michigan State -27.5 L,2026-01-24,-110,-126,128,10.2,spread,735.0,W,923
+339,Milwaukee ,False,Milwaukee ml L,2026-01-24,138,-182,190,14.4,moneyline,245.0,W,465
+340,Missouri ,False,Missouri State ml L,2026-01-24,-104,-125,123,6.7,moneyline,420.0,W,516
+341,Montana ,False,Montana State ml L,2026-01-24,-190,190,-133,14.8,moneyline,647.5,W,486
+342,North ,False,North Carolina -2.5 L,2026-01-24,-130,-102,110,10.9,spread,280.0,W,308
+343,Northern ,False,Northern Iowa -9.5 L,2026-01-24,-201,82,-40,11.6,spread,1225.0,mix,212
+344,Oklahoma ,True,Oklahoma o152.5 L,2026-01-24,-114,-101,112,9.1,total,280.0,W,313
+345,Ole ,False,Ole Miss ml L,2026-01-24,246,-356,480,56.7,moneyline,87.5,L,-87
+346,Orlando ,False,Orlando Magic 2q ml L,2026-01-24,164,-213,280,35.9,2q moneyline,315.0,L,-315
+347,Princeton ,False,Princeton -7.5 L,2026-01-24,-135,100,108,11.2,spread,280.0,W,302
+348,Providence ,False,Providence ml L,2026-01-24,-111,-105,105,3.9,moneyline,455.0,L,-455
+349,Seattle ,False,Seattle +6.5 L,2026-01-24,-114,-114,116,8.0,spread,420.0,W,487
+350,South ,False,South Carolina +31.5 L,2026-01-24,-127,-104,117,13.5,spread,262.5,W,307
+351,South ,True,South Carolina u151.5 L,2026-01-24,-137,3,7,11.5,total,577.5,mix,62
+352,St. ,False,St. John's -0.5 L,2026-01-24,-137,-101,112,13.4,spread,280.0,W,313
+353,St. ,True,St. John's u169.5 L,2026-01-24,-112,-123,128,11.5,total,245.0,L,-245
+354,Stephen ,False,Stephen F. Austin ml L,2026-01-24,-211,211,-133,18.9,moneyline,857.5,W,644
+355,Syracuse ,False,Syracuse +3.5 L,2026-01-24,-117,101,118,13.4,spread,262.5,L,-262
+356,TCU ,True,TCU u157.5 L,2026-01-24,-151,10,112,18.2,total,542.5,mix,58
+357,Temple ,True,Temple o133.5 L,2026-01-24,-105,-125,120,5.5,total,262.5,W,315
+358,Texas ,False,Texas Tech ml L,2026-01-24,140,-163,175,10.6,moneyline,280.0,W,490
+359,Texas ,True,Texas State u148.5 L,2026-01-24,-127,-104,120,15.1,total,262.5,W,315
+360,Toledo ,False,Toledo ml L,2026-01-24,200,-265,255,11.7,moneyline,175.0,W,446
+361,Towson ,True,Towson o148.5 L,2026-01-24,-106,-139,-105,-8.4,total,332.5,W,316
+362,Tulsa ,True,Tulsa o154.5 L,2026-01-24,-7,-107,119,9.2,total,525.0,W,624
+363,UC ,False,UC Santa Barbara ml L,2026-01-24,-132,132,-115,6.4,moneyline,560.0,W,486
+364,UT ,True,UT Rio Grande Valley u142.5 L,2026-01-24,-120,-110,116,10.2,total,262.5,W,304
+365,Utah ,False,Utah +13.5 L,2026-01-24,-120,-104,121,12.0,spread,2495.5,L,-2495
+366,Vanderbilt ,True,Vanderbilt u160.5 L,2026-01-24,150,-150,120,-12.0,total,262.5,W,315
+367,VCU ,False,VCU ml L,2026-01-24,-137,112,-1,9.8,moneyline,892.5,W,887
+368,Villanova ,False,Villanova +4.5 L,2026-01-24,8,-131,130,5.6,spread,612.5,L,-612
+369,Virginia ,True,Virginia Tech o142.5 L,2026-01-24,-118,-106,114,9.7,total,262.5,W,299
+370,Wake ,True,Wake Forest u157.5 L,2026-01-24,-101,-118,123,7.4,total,227.5,L,-227
+371,Washington ,True,Washington Wizards o244.5 L,2026-01-24,138,-162,172,9.4,total,1522.5,L,-1522
+372,West ,True,West Virginia u141.5 L,2026-01-24,-185,127,-114,11.8,total,350.0,W,307
+373,Western ,False,Western Michigan +1.5 L,2026-01-24,108,-108,125,8.4,spread,770.0,W,959
+374,Wichita ,False,Wichita State -15.5 L,2026-01-24,-125,0,112,11.6,spread,542.5,L,-542
+375,William ,False,William & Mary ml L,2026-01-24,102,-102,102,0.0,moneyline,472.5,W,481
+376,Chicago ,False,Chicago Bulls ml L,2026-01-25,-342,285,-204,11.6,moneyline,5005.0,W,2453
+377,Dallas ,False,Dallas Mavericks ml L,2026-01-25,-142,142,-115,9.7,moneyline,2520.0,L,-2520
+378,Golden ,False,Golden State Warriors ml q4 L,2026-01-25,318,-318,360,10.0,moneyline,133.0,W,478
+379,Golden ,True,Golden State Warriors u119.5 1h L,2026-01-25,-4,-105,120,9.4,total,6359.5,mix,5642
+380,Los ,False,Los Angeles Clippers -33.5 L,2026-01-25,100,-100,117,8.5,spread,2082.5,W,2436
+381,Miami ,False,Miami Heat -26.5 L,2026-01-25,100,-100,128,14.0,spread,1907.5,W,2441
+382,Miami ,True,Miami Heat o240.5 L,2026-01-25,-132,-3,113,13.4,total,4060.0,mix,337
+383,Oklahoma ,False,Oklahoma City Thunder q2 ml L,2026-01-25,164,-100,227,22.5,moneyline,1916.6,L,-1916
+384,Oregon ,False,Oregon +14.5 L,2026-01-25,-116,116,128,22.4,spread,402.5,L,-402
+385,Oregon ,True,Oregon o129.5 L,2026-01-25,-111,-102,115,9.7,total,262.5,L,-262
+386,Sacramento ,False,Sacramento Kings +19 L,2026-01-25,-112,-118,150,22.7,spread,3290.0,L,-3290
+387,Sacramento ,True,Sacramento Kings u264 L,2026-01-25,-117,-109,133,18.4,total,700.0,W,931
+388,Santa ,True,Santa Clara o152.5 L,2026-01-25,-115,-115,121,10.9,total,507.5,W,616
+389,Toronto ,False,Toronto Raptors +5.5 L,2026-01-25,125,-131,160,14.2,spread,1522.5,W,2436
+390,Toronto ,True,Toronto Raptors o106.5 1h L,2026-01-25,-130,130,-112,7.0,total,912.8,L,-912
+391,USC ,True,USC u147.5 L,2026-01-25,101,-150,123,1.1,total,787.5,W,968
+392,Utah ,False,Utah Jazz +15.5 L,2026-01-25,-175,155,-126,11.0,spread,6247.5,L,-6247
+393,Wisconsin ,False,Wisconsin -0.5 L,2026-01-25,-114,-114,118,9.0,spread,1347.5,L,-1347
+394,Brooklyn ,True,Brooklyn Nets u213.5 L,2026-01-26,-6,-112,130,10.9,total,4030.6,L,-4029
+395,Miami ,False,Miami Heat -14.5 L,2026-01-26,-119,9,147,31.1,spread,1833.3,L,-1833
+396,Miami ,True,Miami Heat u208.5 L,2026-01-26,154,-175,207,18.2,total,949.9,L,-949
+397,Ball ,False,Ball State ml L,2026-02-11,447,-447,510,11.5,moneyline,163.1,L,-163
+398,Ball ,True,Ball state o163.5,2026-02-11,118,-118,118,0.0,total,385.0,L,-385
+399,Brooklyn ,False,Brooklyn Nets -11.5 L,2026-02-11,102,-102,118,10.1,spread,5347.3,L,-5347
+400,Cincinnati ,True,Cincinnati u162.5 L,2026-02-11,-120,120,102,10.2,total,171.5,W,174
+401,Cleveland ,False,Cleveland Cavaliers -15.5 L,2026-02-11,-200,200,-156,9.6,spread,7542.5,W,4828
+402,Eastern ,True,Eastern Michigan o170.5 L,2026-02-11,-108,108,114,11.1,total,438.2,W,499
+403,Kent ,False,Kent State ml L,2026-02-11,-131,131,-105,10.7,moneyline,728.0,W,693
+404,La ,False,La Salle +11.5 L,2026-02-11,-244,244,-175,11.5,spread,861.7,W,492
+405,Memphis ,False,Memphis Grizzlies 1q ml L,2026-02-11,281,-321,335,11.2,moneyline,573.3,L,-572
+406,Miami ,False,Miami Heat 4q ml L,2026-02-11,148,-148,184,13.6,moneyline,667.8,W,935
+407,Philadelphia ,False,Philadelphia 76ers +21.5 L,2026-02-11,-163,130,-123,6.6,spread,3038.0,L,-3038
+408,Portland ,False,Portland ml L,2026-02-11,-131,131,-106,10.2,moneyline,310.1,L,-310
+409,Sacramento ,False,Sacramento Kings +27.5 L,2026-02-11,-100,100,123,11.5,spread,1519.7,L,-1519
+410,South ,True,South Florida u144.5 L,2026-02-11,-106,106,118,12.2,total,385.0,W,454
+411,Texas ,False,Texas Tech -29.5 L,2026-02-11,-110,110,112,11.0,spread,937.3,W,1049
+412,Western ,False,Western Michigan ml L,2026-02-11,447,-447,650,37.1,moneyline,126.0,L,-126
+413,Alabama ,False,Alabama -2.5 L,2026-02-18,8,-118,130,7.6,spread,3738.7,mix,291
+414,Auburn ,False,Auburn ml L,2026-02-18,62,-62,77,3.5,moneyline,5277.3,L,-5277
+415,Boise ,False,Boise State +8.5 L,2026-02-18,-127,127,1,12.1,spread,1531.6,L,-1531
+416,Butler ,False,Butler -9.5 L,2026-02-18,-123,123,-3,8.8,spread,5107.2,L,-5106
+417,BYU ,False,BYU ml L,2026-02-18,606,-606,750,20.4,moneyline,326.2,L,-326
+418,Clemson ,True,Clemson u146.5 L,2026-02-18,125,-125,116,-4.0,total,1297.8,L,-1297
+419,Creighton ,False,Creighton +14.5 L,2026-02-18,105,-105,133,13.7,spread,1341.2,W,1783
+420,Duquesne ,False,Duquesne -12.5 L,2026-02-18,125,-125,116,-4.0,spread,648.2,L,-648
+421,James ,False,James Madison ml L,2026-02-18,-127,127,-112,5.9,moneyline,1413.3,W,1261
+422,La ,True,La Salle o134.5 L,2026-02-18,-102,102,118,10.1,total,637.7,L,-637
+423,Marquette ,False,Marquette +5.5 L,2026-02-18,-120,120,120,20.0,spread,632.1,L,-632
+424,Missouri ,False,Missouri State +2.5 L,2026-02-18,4,-4,124,9.7,spread,2480.1,L,-2479
+425,ND ,False,ND State -8.5,2026-02-18,102,-102,102,0.0,,731.5,L,-731
+426,Oklahoma ,False,Oklahoma State +16.5 L,2026-02-18,101,-101,118,8.5,spread,637.7,W,752
+427,Oklahoma ,True,Oklahoma o158.5 L,2026-02-18,-103,103,132,17.7,total,1148.0,L,-1148
+428,Ole ,True,Ole Miss u146.5 L,2026-02-18,121,-121,160,17.6,total,932.4,L,-932
+429,San ,False,San Francisco +12.5 L,2026-02-18,-139,139,-112,10.1,spread,847.7,L,-847
+430,St. ,False,St. John's +1.5 L,2026-02-18,111,-111,130,9.0,spread,1512.7,W,2002
+431,Tennessee ,False,Tennessee -17.5 L,2026-02-18,126,-126,129,2.0,spread,2805.6,W,3604
+432,Virginia ,False,Virginia -36.5 L,2026-02-18,-101,101,120,10.5,spread,632.1,L,-632
+433,Wake ,False,Wake Forest -11.5 L,2026-02-18,125,-160,145,2.7,spread,1570.8,L,-1570
+434,Appalachian ,False,Appalachian State -11.5 L,2026-02-19,-147,147,-118,9.6,spread,4508.7,L,-4507
+435,Arkansas ,False,Arkansas State ml L,2026-02-19,-115,115,5,9.8,moneyline,2244.2,mix,8
+436,Atlanta ,False,Atlanta Hawks ml L,2026-02-19,-110,110,105,7.9,moneyline,4578.7,W,4830
+437,Atlanta ,True,Atlanta Hawks o231.5 L,2026-02-19,161,-161,182,8.0,total,3011.4,L,-3010
+438,Bryant ,False,Bryant ml L,2026-02-19,-109,109,123,16.3,moneyline,1003.1,L,-1003
+439,Cal ,False,Cal State Northridge ml L,2026-02-19,107,-124,138,10.9,moneyline,1414.0,mix,590
+440,Cal ,True,Cal State Northridge o132.5 L,2026-02-19,-120,120,-152,-9.6,total,1121.4,W,737
+441,Detroit ,False,Detroit Pistons 2q ml L,2026-02-19,142,-142,163,8.7,moneyline,925.4,W,1508
+442,Detroit ,True,Detroit Pistons o229.5 L,2026-02-19,209,-209,285,24.5,total,884.1,W,2513
+443,Gardner ,True,Gardner Webb o153.5 L,2026-02-19,-108,108,120,14.2,total,627.2,L,-627
+444,Hawaii ,False,Hawaii ml L,2026-02-19,-133,133,-112,8.0,moneyline,1402.1,L,-1402
+445,Houston ,True,Houston Rockets o206.5 L,2026-02-19,152,-190,145,-7.6,total,980.0,L,-980
+446,Liberty ,False,Liberty ml L,2026-02-19,-166,166,-109,19.7,moneyline,2698.5,W,2475
+447,Lindenwood ,False,Lindenwood ml L,2026-02-19,-181,181,-103,26.9,moneyline,1266.3,L,-1266
+448,Marshall ,False,Marshall +10.5 L,2026-02-19,-115,115,104,9.1,spread,725.9,W,754
+449,Marshall ,True,Marshall u162.5 L,2026-02-19,-107,107,110,8.6,total,685.3,L,-685
+450,Memphis ,False,Memphis +15.5 L,2026-02-19,-106,106,116,11.1,spread,9731.4,L,-9730
+451,Montana ,False,Montana State ml L,2026-02-19,351,-351,500,33.0,moneyline,246.4,L,-246
+452,New ,False,New Haven ml L,2026-02-19,-170,170,-137,8.9,moneyline,1028.3,W,750
+453,Orlando ,True,Orlando Magic o107.5 1h L,2026-02-19,-125,128,-110,6.7,total,1370.6,W,1245
+454,Phoenix ,False,Phoenix Suns +24.5 L,2026-02-19,105,-125,118,1.9,spread,3110.8,L,-3110
+455,Phoenix ,True,Phoenix Suns o232.5 L,2026-02-19,-148,148,108,21.3,total,10152.8,mix,-1431
+456,Presbyterian ,False,Presbyterian ml L,2026-02-19,104,-104,120,7.8,moneyline,616.7,W,740
+457,Sacramento ,False,Sacramento Kings +20.5 L,2026-02-19,-109,109,105,6.9,spread,2349.9,L,-2349
+458,USC ,False,USC Upstate +6.5 L,2026-02-19,-120,120,-139,-6.2,spread,695.1,W,500
+459,UT ,False,UT Martin ml L,2026-02-19,135,-135,190,23.4,moneyline,393.4,L,-393
+460,Weber ,False,Weber State ml L,2026-02-19,-200,200,-175,4.8,moneyline,2127.3,W,1215
+461,Rider ,False,Rider +5.5 L,2026-02-20,-117,117,118,17.5,spread,197.4,L,-197
+462,California ,False,California -9.5 L,2026-02-21,-111,111,120,9.6,spread,2100.0,L,-2100
+463,Clemson ,False,Clemson +1.5 L,2026-02-21,-126,126,-106,8.3,spread,840.0,L,-840
+464,Coastal ,False,Coastal Carolina -10.5 L,2026-02-21,100,-100,112,6.0,spread,0.0,P,0
+465,Cornell ,False,Cornell ml L,2026-02-21,100,-100,135,17.5,moneyline,304.5,L,-304
+466,Duquesne ,False,Duquesne +12.5 L,2026-02-21,115,-115,125,4.7,moneyline,197.4,W,246
+467,Georgetown ,True,Georgetown o113.5 L,2026-02-21,-132,132,-109,9.1,total,89.6,L,-89
+468,Georgia ,True,Georgia Tech u160.5 L,2026-02-21,-107,107,112,9.6,total,441.0,W,493
+469,Miami ,True,Miami Florida u162.5 L,2026-02-21,107,-107,130,11.1,total,350.0,L,-350
+470,Nebraska ,False,Nebraska -26.5 L,2026-02-21,129,-129,170,17.9,spread,350.0,L,-350
+471,North ,True,North Carolina u138.5 L,2026-02-21,-130,130,-110,7.9,total,520.1,L,-520
+472,St. ,False,St. John's -29.5 L,2026-02-21,114,-114,130,7.5,spread,595.0,L,-595
+473,Texas ,False,Texas Tech -25.5 L,2026-02-21,111,-111,133,10.2,spread,1073.8,W,1429
+474,UL ,False,UL Lafayette -7.5 L,2026-02-21,-108,108,110,9.0,spread,210.0,W,231
+475,Virginia ,False,Virginia ml L,2026-02-21,-139,139,115,30.4,moneyline,3129.7,W,3903
+476,Abilene ,False,Abilene Christian +3.5 L,2026-02-28,104,-104,125,10.3,spread,594.3,L,-594
+477,Arkansas ,False,Arkansas +6.5 L,2026-02-28,-104,104,115,9.6,spread,2149.0,L,-2149
+478,Arkansas ,True,Arkansas o177.5 L,2026-02-28,101,-137,135,8.7,total,366.8,W,495
+479,Auburn ,False,Auburn ml L,2026-02-28,247,-247,275,8.1,moneyline,300.3,L,-300
+480,Austin ,False,Austin Peay ml L,2026-02-28,-114,114,119,16.5,moneyline,697.2,L,-696
+481,Bellarmine ,False,Bellarmine -6.5 L,2026-02-28,-106,106,125,15.8,spread,595.0,W,743
+482,Boise ,False,Boise State -13.5 L,2026-02-28,105,-105,125,9.8,spread,604.1,W,755
+483,Cal ,True,Cal State Northridge o175.5 L,2026-02-28,108,-108,140,15.4,total,538.3,W,753
+484,California ,False,California +2.5 L,2026-02-28,-110,110,-130,-7.3,spread,977.9,L,-977
+485,Connecticut ,False,Connecticut ml L,2026-02-28,-153,153,-11,15.0,moneyline,1845.9,W,1661
+486,Detroit ,True,Detroit Mercy o172.5 L,2026-02-28,-115,115,109,11.4,total,308.7,mix,25
+487,East ,False,East Tennessee State +4.5 L,2026-02-28,104,-104,123,9.3,spread,604.1,L,-604
+488,Florida ,True,Florida State u153.5 L,2026-02-28,1,-1,122,10.6,total,404.6,W,494
+489,Furman ,False,Furman ml L,2026-02-28,158,-158,230,27.2,moneyline,375.9,L,-375
+490,Furman ,True,Furman o148.5 L,2026-02-28,-102,102,118,10.0,total,834.4,W,992
+491,Howard ,True,Howard o138.5 L,2026-02-28,-110,-110,110,5.0,total,149.8,W,164
+492,Idaho ,False,Idaho ml L,2026-02-28,-102,102,110,6.0,moneyline,630.0,L,-630
+493,Iowa ,True,Iowa u151.5 L,2026-02-28,-146,146,-111,12.8,total,556.5,W,501
+494,IUPUI ,False,IUPUI ml L,2026-02-28,45,-45,187,15.8,moneyline,240.1,L,-239
+495,Lafayette ,False,Lafayette -9.5 L,2026-02-28,-104,104,116,10.1,spread,143.5,L,-143
+496,Lamar ,False,Lamar +4.5 L,2026-02-28,-102,102,118,10.1,spread,213.5,L,-213
+497,Le ,False,Le Moyne ml L,2026-02-28,-156,156,-118,12.6,moneyline,291.2,L,-291
+498,Long ,False,Long Beach State ml L,2026-02-28,-107,107,120,13.7,moneyline,619.5,W,743
+499,Louisville ,False,Louisville ml L,2026-02-28,126,-126,165,17.3,moneyline,500.5,L,-500
+500,Loyola ,True,Loyola Maryland u153.5 L,2026-02-28,-182,166,-128,10.0,total,429.8,W,334
+501,Massachusetts ,True,Massachusetts o142.5 L,2026-02-28,104,-104,133,14.2,total,165.9,W,220
+502,Missouri ,False,Missouri -20.5 L,2026-02-28,101,-101,118,8.5,spread,705.6,W,832
+503,Missouri ,True,Missouri u152.5 L,2026-02-28,-103,103,112,7.6,total,450.1,W,504
+504,NC ,False,NC State -7.5 L,2026-02-28,68,-104,249,24.8,spread,297.5,L,-297
+505,Nebraska ,True,Nebraska u144.5 L,2026-02-28,-104,104,120,9.2,total,1049.3,L,-1049
+506,Nebraska-Omaha ,True,Nebraska-Omaha u136.5 L,2026-02-28,-106,106,125,15.8,total,594.3,W,742
+507,New ,False,New Mexico State -4.5 L,2026-02-28,117,-117,135,8.3,spread,183.4,L,-183
+508,North ,False,North Carolina A&T +13.5 L,2026-02-28,-136,136,-9,10.0,spread,366.8,W,335
+509,Northern ,False,Northern Colorado ml L,2026-02-28,116,-116,140,11.1,moneyline,179.9,W,251
+510,Ole ,False,Ole Miss -2.5 L,2026-02-28,-112,112,120,16.2,spread,688.1,W,825
+511,Pacific ,False,Pacific +8.5 L,2026-02-28,-103,103,116,9.6,spread,143.5,L,-143
+512,Penn ,False,Penn State +4.5 L,2026-02-28,-3,3,114,8.8,spread,1481.2,W,1681
+513,Portland ,False,Portland State +12.5 L,2026-02-28,130,-130,120,-4.3,spread,630.0,W,756
+514,Providence ,False,Providence +3.5 L,2026-02-28,-113,113,104,8.0,spread,7653.1,W,7395
+515,Queens ,True,Queens o142.5 L,2026-02-28,-107,107,112,9.6,total,149.1,W,166
+516,Samford ,False,Samford -12.5 L,2026-02-28,101,-101,130,14.4,spread,193.2,L,-193
+517,San ,False,San Diego State ml L,2026-02-28,260,-260,500,66.7,moneyline,490.0,L,-490
+518,San ,True,San Francisco u152.5 L,2026-02-28,-115,-115,100,0.0,total,458.5,W,458
+519,Seton ,True,Seton Hall u123.5 L,2026-02-28,106,-106,125,9.2,total,372.4,L,-372
+520,St. ,False,St. John's -30.5 L,2026-02-28,-102,102,128,15.1,spread,1960.0,L,-1960
+521,Stetson ,False,Stetson -7.5 L,2026-02-28,-108,108,112,10.4,spread,299.6,W,334
+522,Stony ,True,Stony Brook o131.5 L,2026-02-28,-104,104,120,12.2,total,619.5,L,-619
+523,Tarleton ,True,Tarleton State o154.5 L,2026-02-28,-104,104,125,14.7,total,604.1,L,-604
+524,Tennessee ,False,Tennessee State -22.5 L,2026-02-28,-108,108,114,11.1,spread,144.9,W,165
+525,Texas ,False,Texas ml L,2026-02-28,105,-105,136,15.4,moneyline,8372.7,mix,2397
+526,Texas ,True,Texas Tech u148.5 L,2026-02-28,-101,101,120,12.3,total,3554.6,L,-3553
+527,The ,False,The Citadel +6.5 L,2026-02-28,0,0,137,19.1,spread,724.5,mix,-287
+528,Toledo ,True,Toledo u145.5 L,2026-02-28,-105,105,132,18.8,total,571.9,L,-571
+529,Toronto ,False,Toronto Raptors -10.5 L,2026-02-28,247,-247,290,12.4,spread,1255.1,L,-1255
+530,Toronto ,True,Toronto Raptors u246.5 L,2026-02-28,4,-4,140,17.5,total,2262.4,L,-2262
+531,UC ,True,UC Santa Barbara o127.5 L,2026-02-28,0,0,120,10.2,total,1185.1,L,-1185
+532,UMBC ,False,UMBC -9.5 L,2026-02-28,-104,104,112,8.1,spread,149.8,W,167
+533,UMBC ,True,UMBC o151.5 L,2026-02-28,-105,105,120,12.7,total,175.7,L,-175
+534,UNC ,True,UNC Greensboro u166.5 L,2026-02-28,-110,110,118,14.2,total,211.4,W,249
+535,USC ,False,USC Upstate -12.5 L,2026-02-28,10,-10,128,8.8,spread,326.9,L,-326
+536,Utah ,False,Utah Tech ml L,2026-02-28,149,-149,188,15.7,moneyline,401.8,L,-401
+537,UTEP ,True,UTEP u170.5 L,2026-02-28,-101,101,123,12.1,total,198.1,L,-198
+538,Vanderbilt ,False,Vanderbilt +3.5 L,2026-02-28,-107,107,112,9.6,spread,751.1,L,-751
+539,Virginia ,True,Virginia u132.5 L,2026-02-28,-102,102,125,13.6,total,395.5,W,494
+540,VMI ,True,VMI u155.5 L,2026-02-28,-104,104,114,9.1,total,147.0,L,-147
+541,Wake ,False,Wake Forest +1.5 L,2026-02-28,-102,102,118,10.1,spread,2097.2,W,2474
+542,Weber ,False,Weber State -14.5 L,2026-02-28,100,-100,125,12.5,spread,594.3,L,-594
+543,Western ,False,Western Carolina -5.5 L,2026-02-28,106,-106,120,6.8,spread,206.5,W,247
+544,Wofford ,False,Wofford ml L,2026-02-28,672,-672,1150,61.9,moneyline,112.0,L,-112
+545,Wright ,False,Wright State +10.5 L,2026-02-28,108,-108,128,9.6,spread,581.0,W,743
+546,Cal ,False,Cal State Fullerton +4.5 L,2026-03-05,193,-193,239,13.7,spread,804.3,mix,1470
+547,Cal ,True,Cal State Northridge o170.5 L,2026-03-05,-106,106,116,11.1,total,140.0,L,-140
+548,Colgate ,False,Colgate -10.5 L,2026-03-05,-103,103,131,14.9,spread,732.2,W,916
+549,Denver ,False,Denver Nuggets ml L,2026-03-05,-170,170,-137,8.9,moneyline,1670.9,W,1219
+550,East ,False,East Carolina +23.5 L,2026-03-05,-114,114,123,18.8,spread,198.1,L,-198
+551,Evansville ,True,Evansville o141.5 L,2026-03-05,118,-118,118,0.0,total,389.9,L,-389
+552,Jacksonville ,False,Jacksonville State -9.5 L,2026-03-05,-108,108,115,11.6,spread,141.4,L,-141
+553,Loyola ,False,Loyola Marymount ml L,2026-03-05,265,-265,315,13.6,moneyline,515.9,L,-515
+554,Middle ,True,Middle Tennessee State u137.5 L,2026-03-05,106,-106,135,14.1,total,180.6,L,-180
+555,Missouri ,False,Missouri State +4.5 L,2026-03-05,110,-110,138,13.3,spread,176.4,W,243
+556,Navy ,False,Navy ml L,2026-03-05,-61,61,3,18.8,moneyline,711.2,mix,229
+557,New ,False,New Orleans Pelicans -9.5 L,2026-03-05,108,-143,120,-1.1,spread,676.2,W,811
+558,Pepperdine ,True,Pepperdine u157.5 L,2026-03-05,101,-101,130,14.4,total,187.6,W,243
+559,South ,True,South Florida o184.5 L,2026-03-05,112,-112,125,6.1,total,779.8,mix,98
+560,Tulsa ,False,Tulsa -22.5 L,2026-03-05,-140,140,-105,13.9,spread,257.6,W,245
+561,UC ,False,UC San Diego ml L,2026-03-05,-119,119,-105,6.1,moneyline,427.7,L,-427
+562,UT ,True,UT Arlington o129.5 L,2026-03-05,108,-108,133,12.0,total,183.4,L,-183
+563,Washington ,False,Washington Wizards +13.5 L,2026-03-05,-124,124,105,13.5,spread,1161.3,W,1219
+564,Arkansas ,False,Arkansas ml L,2026-03-07,-109,109,118,14.4,moneyline,4860.1,W,5939
+565,Arkansas ,True,Arkansas u162.5 L,2026-03-07,-6,6,121,14.1,total,1598.1,mix,183
+566,Connecticut ,False,Connecticut ml L,2026-03-07,492,-492,700,22.1,moneyline,892.5,L,-891
+567,Connecticut ,True,Connecticut o134.5 L,2026-03-07,-100,100,125,12.5,total,96.6,L,-96
+568,Davidson ,False,Davidson -11.5 L,2026-03-07,-109,109,120,14.7,spread,404.6,L,-404
+569,Georgia ,False,Georgia Tech +10.5 L,2026-03-07,-124,124,118,19.0,spread,14499.1,mix,6148
+570,Kansas ,True,Kansas State o153.5 L,2026-03-07,-129,129,-103,11.0,total,249.9,W,242
+571,Louisiana ,True,Louisiana Tech o132.5 L,2026-03-07,-103,103,118,10.6,total,410.9,L,-410
+572,Missouri ,False,Missouri ml L,2026-03-07,-107,107,114,10.6,moneyline,1348.2,L,-1348
+573,Notre ,True,Notre Dame o137.5 L,2026-03-07,-107,107,115,11.1,total,844.2,W,970
+574,Stony ,False,Stony Brook ml L,2026-03-07,214,-214,245,9.9,moneyline,329.7,L,-329
+575,UNC ,True,UNC Greensboro o154.5 L,2026-03-07,-132,132,105,16.6,total,92.4,L,-92
+576,Villanova ,False,Villanova -12.5 L,2026-03-07,-133,133,-106,10.9,spread,1721.3,W,1623
+577,Charlotte ,True,Charlotte Hornets u205.5 L,2026-03-10,150,-150,128,-8.8,total,572.6,W,732
+578,Detroit ,True,Detroit Pistons u114.5 1h L,2026-03-10,-166,166,-127,11.5,total,1547.0,W,1218
+579,Florida ,False,Florida International ml L,2026-03-10,125,-125,150,11.1,moneyline,1629.6,L,-1629
+580,Idaho ,False,Idaho -6.5 L,2026-03-10,-104,104,116,11.7,spread,1619.8,W,1830
+581,Idaho ,True,Idaho o144.5 L,2026-03-10,-105,105,132,18.8,total,1540.7,mix,1198
+582,Kansas ,True,Kansas State u190.5 L,2026-03-10,109,-109,128,9.1,total,1145.9,L,-1145
+583,Long ,False,Long Island ml L,2026-03-10,-122,122,-110,4.9,moneyline,2685.9,W,2441
+584,Los ,False,Los Angeles Lakers -13.5 L,2026-03-10,-132,132,-106,8.2,spread,5375.3,W,4883
+585,Mercyhurst ,True,Mercyhurst u152.5 L,2026-03-10,116,-117,120,1.6,total,1222.2,W,1466
+586,Milwaukee ,False,Milwaukee Bucks -4.5 L,2026-03-10,8,-8,35,10.8,spread,5938.1,L,-5937
+587,Minnesota ,True,Minnesota Timberwolves o216.5 L,2026-03-10,164,-164,188,9.1,total,389.9,W,733
+588,Monmouth ,True,Monmouth u136.5 L,2026-03-10,-103,103,116,9.6,total,1264.2,L,-1264
+589,Oklahoma ,False,Oklahoma State -9.5 L,2026-03-10,-112,112,108,9.9,spread,2144.1,L,-2144
+590,Oklahoma ,True,Oklahoma State o174.5 L,2026-03-10,175,-175,175,0.0,total,837.9,W,1466
+591,Oregon ,False,Oregon +18.5 L,2026-03-10,-111,111,106,8.4,spread,2305.8,W,2444
+592,Portland ,False,Portland State ml L,2026-03-10,159,-159,387,75.0,moneyline,1258.6,L,-1258
+593,San ,False,San Antonio Spurs ml L,2026-03-10,-144,144,-120,8.2,moneyline,4404.4,W,3670
+594,Syracuse ,False,Syracuse +13.5 L,2026-03-10,106,-106,148,20.4,spread,1651.3,L,-1651
+595,Texas ,False,Texas A&M Corpus Christi 1h ml L,2026-03-10,-122,122,8,13.5,moneyline,1771.0,mix,-183
+596,UT ,False,UT Rio Grande Valley ml L,2026-03-10,162,-162,277,40.3,moneyline,546.7,L,-546
+597,Vermont ,False,Vermont -10.5 L,2026-03-10,-115,115,112,13.4,spread,654.5,L,-654
+598,Virginia ,False,Virginia Tech ml L,2026-03-10,-152,152,-135,5.0,moneyline,3303.3,L,-3303
+599,Wake ,False,Wake Forest -6.5 L,2026-03-10,109,-109,143,16.3,spread,1709.4,L,-1709
+600,Washington ,True,Washington Wizards u248.5 L,2026-03-10,108,-108,130,10.6,total,1237.6,L,-1237

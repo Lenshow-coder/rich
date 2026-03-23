@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sports Betting Analyzer (Full SQLite DB) + Graphs</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 20px; }
+    h1 { margin: 0 0 10px; font-size: 20px; }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+    .card { border: 1px solid rgba(127,127,127,.35); border-radius: 12px; padding: 14px; min-width: 280px; flex: 1; }
+    .card h2 { font-size: 14px; margin: 0 0 10px; opacity: .9; }
+    label { display: block; margin: 8px 0 4px; font-size: 12px; opacity: .9; }
+    input[type="number"], input[type="text"], input[type="date"], select, input[type="file"] {
+      width: 100%; padding: 8px; border-radius: 10px;
+      border: 1px solid rgba(127,127,127,.35); background: transparent;
+    }
+    .btns { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    button {
+      padding: 9px 12px; border-radius: 10px;
+      border: 1px solid rgba(127,127,127,.35); background: rgba(127,127,127,.10);
+      cursor: pointer;
+    }
+    button:hover { background: rgba(127,127,127,.18); }
+    .muted { opacity: .75; font-size: 12px; margin-top: 6px; }
+    .warn { color: #b45309; }
+    .err { color: #b91c1c; }
+    .ok { color: #047857; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border-bottom: 1px solid rgba(127,127,127,.25); padding: 8px 6px; text-align: left; font-size: 13px; }
+    th { font-size: 12px; opacity: .85; }
+    .kpi { display: grid; grid-template-columns: repeat(4, minmax(140px, 1fr)); gap: 10px; }
+    .kpi .box { border: 1px solid rgba(127,127,127,.25); border-radius: 12px; padding: 10px; }
+    .kpi .name { font-size: 11px; opacity: .8; }
+    .kpi .val { font-size: 18px; margin-top: 4px; font-variant-numeric: tabular-nums; }
+    .filterRow { border: 1px solid rgba(127,127,127,.25); border-radius: 12px; padding: 10px; margin-top: 10px; }
+    .filterGrid { display: grid; grid-template-columns: 2fr 1.2fr 2fr auto; gap: 10px; align-items: end; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(127,127,127,.35); font-size: 12px; opacity:.85;}
+    .graphs { display:none; margin-top: 12px; }
+    .graphsGrid { display: grid; grid-template-columns: repeat(2, minmax(320px, 1fr)); gap: 14px; }
+    .chartCard { border: 1px solid rgba(127,127,127,.25); border-radius: 12px; padding: 12px; }
+    .chartTitle { font-size: 12px; opacity: .85; margin: 0 0 8px; }
+    canvas { width: 100% !important; height: 280px !important; }
+  </style>
+
+  <!-- sql.js -->
+  <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <h1>Sports Betting Analyzer (Full SQLite DB)</h1>
+  <div class="muted">
+    Upload a SQLite DB and filter on <b>any</b> columns. Defaults metric to <span class="pill">Net</span>.
+    Sharpe = mean(metric)/stdev(metric). Sample stdev (n-1).
+  </div>
+
+  <div class="row" style="margin-top:14px;">
+    <div class="card" style="max-width:560px;">
+      <h2>1) Load SQLite DB</h2>
+      <label for="dbfile">Choose .sqlite file</label>
+      <input id="dbfile" type="file" accept=".sqlite,.db,application/x-sqlite3" />
+      <div id="dbStatus" class="muted"></div>
+      <div id="initStatus" class="muted"></div>
+
+      <label for="tableSelect">Table</label>
+      <select id="tableSelect"></select>
+
+      <label for="metricSelect">Metric column (profit / outcome)</label>
+      <select id="metricSelect"></select>
+
+      <div class="btns">
+        <button id="loadBtn">Load DB</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>2) Filters</h2>
+      <div class="muted">Add one or more filters. Leave empty to include all rows.</div>
+
+      <div class="btns">
+        <button id="addFilterBtn">Add filter</button>
+        <button id="clearFiltersBtn">Clear filters</button>
+        <button id="runBtn">Run Summary</button>
+        <button id="graphsBtn" disabled>Show Graphs</button>
+      </div>
+
+      <div id="filters"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <h2>3) Results</h2>
+
+    <div class="kpi">
+      <div class="box"><div class="name">Rows (filtered)</div><div class="val" id="kpiCount">—</div></div>
+      <div class="box"><div class="name">Sum (metric)</div><div class="val" id="kpiSum">—</div></div>
+      <div class="box"><div class="name">Volatility (stdev)</div><div class="val" id="kpiVol">—</div></div>
+      <div class="box"><div class="name">Sharpe Ratio</div><div class="val" id="kpiSharpe">—</div></div>
+    </div>
+
+    <div id="resultMsg" class="muted" style="margin-top:10px;"></div>
+
+    <div id="graphs" class="graphs">
+      <div class="muted">Graphs are computed from the current filters. If a chart can’t be built (missing columns), it will show a note.</div>
+      <div class="graphsGrid">
+        <div class="chartCard">
+          <div class="chartTitle">Cumulative Metric Over Time (by Date)</div>
+          <div id="tsNote" class="muted"></div>
+          <canvas id="tsChart"></canvas>
+        </div>
+        <div class="chartCard">
+          <div class="chartTitle">Distribution (Histogram) of Metric</div>
+          <canvas id="histChart"></canvas>
+        </div>
+        <div class="chartCard">
+          <div class="chartTitle">Sum of Metric by Sport</div>
+          <div id="sportNote" class="muted"></div>
+          <canvas id="sportChart"></canvas>
+        </div>
+        <div class="chartCard">
+          <div class="chartTitle">Sum of Metric by Book (Top 15)</div>
+          <div id="bookNote" class="muted"></div>
+          <canvas id="bookChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <table id="previewTable" style="display:none;">
+      <thead><tr id="previewHeader"></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- Helpers ----------
+  function mean(arr){ if(!arr.length) return NaN; return arr.reduce((a,b)=>a+b,0)/arr.length; }
+  function stdev(arr){
+    const n = arr.length; if(n < 2) return NaN;
+    const m = mean(arr);
+    let ss = 0; for(const v of arr) ss += (v-m)*(v-m);
+    return Math.sqrt(ss/(n-1));
+  }
+  function fmtNum(n, d=2){ if(!Number.isFinite(n)) return "—"; return n.toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d}); }
+  function fmtInt(n){ if(!Number.isFinite(n)) return "—"; return n.toLocaleString(undefined,{maximumFractionDigits:0}); }
+  function esc(s){
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;").replaceAll("'","&#039;");
+  }
+
+  // ---------- sql.js state ----------
+  let SQL = null;
+  let db = null;
+  let columns = [];
+  let columnTypes = {};
+
+  let sqlInitPromise = null;
+  function initSqlJsOnce(){
+    if(sqlInitPromise) return sqlInitPromise;
+    sqlInitPromise = initSqlJs({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/${file}`
+    }).then((SQLlib)=>{
+      SQL = SQLlib;
+      $("initStatus").innerHTML = `<span class="ok">sql.js ready</span>`;
+      return SQL;
+    }).catch((e)=>{
+      $("initStatus").innerHTML = `<span class="err">Failed to load sql.js: ${esc(e.message||String(e))}</span>`;
+      throw e;
+    });
+    return sqlInitPromise;
+  }
+
+  async function loadDBFromFile(file){
+    await initSqlJsOnce();
+    const buf = await file.arrayBuffer();
+    const u8 = new Uint8Array(buf);
+    if(db) db.close();
+    db = new SQL.Database(u8);
+  }
+
+  function queryAll(sql, params=[]){
+    const stmt = db.prepare(sql);
+    stmt.bind(params);
+    const rows = [];
+    while(stmt.step()) rows.push(stmt.getAsObject());
+    stmt.free();
+    return rows;
+  }
+
+  function listTables(){
+    const rows = queryAll(`SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;`);
+    return rows.map(r=>r.name);
+  }
+  function getTableColumns(table){
+    const rows = queryAll(`PRAGMA table_info("${table.replaceAll('"','""')}");`);
+    return rows.map(r=>({name:r.name, type:(r.type||"").toUpperCase()}));
+  }
+  function isLikelyDateValue(v){
+    if(v===null||v===undefined) return false;
+    const s = String(v).trim();
+    return /^\d{4}-\d{2}-\d{2}/.test(s);
+  }
+  function inferColumnTypes(table, cols){
+    const out = {};
+    for(const c of cols){
+      out[c.name] = "text";
+      try{
+        const sample = queryAll(
+          `SELECT "${c.name.replaceAll('"','""')}" AS v
+           FROM "${table.replaceAll('"','""')}"
+           WHERE "${c.name.replaceAll('"','""')}" IS NOT NULL
+           LIMIT 200;`
+        ).map(r=>r.v);
+
+        if(!sample.length){ out[c.name] = "text"; continue; }
+
+        const dateHits = sample.filter(isLikelyDateValue).length;
+        if(dateHits / sample.length >= 0.8){ out[c.name] = "date"; continue; }
+
+        const numHits = sample.filter(v=>Number.isFinite(Number(v))).length;
+        if(numHits / sample.length >= 0.9){ out[c.name] = "number"; continue; }
+
+        out[c.name] = "text";
+      }catch(e){
+        out[c.name] = "text";
+      }
+    }
+    return out;
+  }
+
+  function fillSelect(sel, options, preferred=null){
+    sel.innerHTML = "";
+    for(const opt of options){
+      const o = document.createElement("option");
+      o.value = opt; o.textContent = opt;
+      sel.appendChild(o);
+    }
+    if(preferred && options.includes(preferred)) sel.value = preferred;
+  }
+
+  function setMsg(text, cls=""){
+    const el = $("resultMsg");
+    el.className = "muted " + cls;
+    el.textContent = text || "";
+  }
+  function setKPIs({count,sum,vol,sharpe}){
+    $("kpiCount").textContent = Number.isFinite(count) ? fmtInt(count) : "—";
+    $("kpiSum").textContent = Number.isFinite(sum) ? fmtNum(sum,2) : "—";
+    $("kpiVol").textContent = Number.isFinite(vol) ? fmtNum(vol,2) : "—";
+    $("kpiSharpe").textContent = Number.isFinite(sharpe) ? fmtNum(sharpe,4) : "—";
+  }
+
+  function showPreview(rows){
+    const previewTable = $("previewTable");
+    const theadTr = $("previewHeader");
+    const tbody = previewTable.querySelector("tbody");
+    tbody.innerHTML = "";
+    theadTr.innerHTML = "";
+    if(!rows.length){ previewTable.style.display="none"; return; }
+
+    const keys = Object.keys(rows[0]);
+    for(const k of keys){
+      const th = document.createElement("th");
+      th.textContent = k;
+      theadTr.appendChild(th);
+    }
+
+    const n = Math.min(rows.length, 25);
+    for(let i=0;i<n;i++){
+      const tr = document.createElement("tr");
+      tr.innerHTML = keys.map(k=>`<td>${esc(rows[i][k])}</td>`).join("");
+      tbody.appendChild(tr);
+    }
+    previewTable.style.display="table";
+  }
+
+  // ---------- Filter UI ----------
+  function makeFilterRow(){
+    const wrap = document.createElement("div");
+    wrap.className = "filterRow";
+    wrap.innerHTML = `
+      <div class="filterGrid">
+        <div><label>Column</label><select class="f_col"></select></div>
+        <div><label>Op</label><select class="f_op"></select></div>
+        <div class="f_val_wrap"><label>Value</label><div class="f_val"></div></div>
+        <div><button class="f_remove" title="Remove">✕</button></div>
+      </div>
+      <div class="muted f_hint"></div>
+    `;
+
+    const colSel = wrap.querySelector(".f_col");
+    const opSel  = wrap.querySelector(".f_op");
+    const valDiv = wrap.querySelector(".f_val");
+    const hint   = wrap.querySelector(".f_hint");
+
+    fillSelect(colSel, columns.map(c=>c.name));
+
+    function setOpsForType(t){
+      const ops = (t==="number") ? ["between","=","<=",">="] :
+                  (t==="date")   ? ["between","=","<=",">="] :
+                                   ["in","=","contains"];
+      fillSelect(opSel, ops, ops[0]);
+    }
+
+    function renderValueInput(){
+      const col = colSel.value;
+      const t = columnTypes[col] || "text";
+      setOpsForType(t);
+      const op = opSel.value;
+      valDiv.innerHTML = "";
+
+      if(t==="number"){
+        if(op==="between"){
+          valDiv.innerHTML = `<div class="row" style="gap:10px;">
+              <input type="number" class="f_num_min" placeholder="min" />
+              <input type="number" class="f_num_max" placeholder="max" />
+            </div>`;
+          hint.textContent = "Numeric between filter.";
+        }else{
+          valDiv.innerHTML = `<input type="number" class="f_num" placeholder="value" />`;
+          hint.textContent = "Numeric scalar filter.";
+        }
+      }else if(t==="date"){
+        if(op==="between"){
+          valDiv.innerHTML = `<div class="row" style="gap:10px;">
+              <input type="date" class="f_date_min" />
+              <input type="date" class="f_date_max" />
+            </div>`;
+          hint.textContent = "Date between filter (YYYY-MM-DD).";
+        }else{
+          valDiv.innerHTML = `<input type="date" class="f_date" />`;
+          hint.textContent = "Date scalar filter (YYYY-MM-DD).";
+        }
+      }else{
+        if(op==="in"){
+          const table = $("tableSelect").value;
+          const vals = queryAll(
+            `SELECT DISTINCT "${col.replaceAll('"','""')}" AS v
+             FROM "${table.replaceAll('"','""')}"
+             WHERE "${col.replaceAll('"','""')}" IS NOT NULL
+             ORDER BY v
+             LIMIT 250;`
+          ).map(r=>r.v);
+          const id = "ms_" + Math.random().toString(36).slice(2);
+          let html = `<select multiple size="6" class="f_multi" id="${id}">`;
+          for(const v of vals) html += `<option value="${esc(v)}">${esc(v)}</option>`;
+          html += `</select>`;
+          valDiv.innerHTML = html;
+          hint.textContent = vals.length >= 250 ? "Distinct list truncated to 250 values." : "Choose one or more values.";
+        }else if(op==="contains"){
+          valDiv.innerHTML = `<input type="text" class="f_text" placeholder="substring (case-insensitive)" />`;
+          hint.textContent = "Text contains filter (case-insensitive).";
+        }else{
+          valDiv.innerHTML = `<input type="text" class="f_text" placeholder="exact value" />`;
+          hint.textContent = "Text exact match filter.";
+        }
+      }
+    }
+
+    colSel.addEventListener("change", renderValueInput);
+    opSel.addEventListener("change", renderValueInput);
+
+    wrap.querySelector(".f_remove").addEventListener("click", (e)=>{
+      e.preventDefault();
+      wrap.remove();
+    });
+
+    renderValueInput();
+    return wrap;
+  }
+
+  function addFilter(){
+    if(!db || !columns.length){ alert("Load DB first."); return; }
+    $("filters").appendChild(makeFilterRow());
+  }
+  function clearFilters(){ $("filters").innerHTML = ""; }
+
+  function buildWhereFromFilters(){
+    const table = $("tableSelect").value;
+    const rows = Array.from($("filters").querySelectorAll(".filterRow"));
+    const clauses = [];
+    const params = [];
+
+    for(const r of rows){
+      const col = r.querySelector(".f_col").value;
+      const op  = r.querySelector(".f_op").value;
+      const t   = columnTypes[col] || "text";
+      const colQ = `"${col.replaceAll('"','""')}"`;
+
+      if(t==="number"){
+        if(op==="between"){
+          const mn = r.querySelector(".f_num_min")?.value;
+          const mx = r.querySelector(".f_num_max")?.value;
+          if(mn !== "" && mn != null){ clauses.push(`${colQ} >= ?`); params.push(Number(mn)); }
+          if(mx !== "" && mx != null){ clauses.push(`${colQ} <= ?`); params.push(Number(mx)); }
+        }else{
+          const v = r.querySelector(".f_num")?.value;
+          if(v === "" || v == null) continue;
+          clauses.push(`${colQ} ${op} ?`);
+          params.push(Number(v));
+        }
+      }else if(t==="date"){
+        if(op==="between"){
+          const d1 = r.querySelector(".f_date_min")?.value;
+          const d2 = r.querySelector(".f_date_max")?.value;
+          if(d1){ clauses.push(`substr(${colQ},1,10) >= ?`); params.push(d1); }
+          if(d2){ clauses.push(`substr(${colQ},1,10) <= ?`); params.push(d2); }
+        }else{
+          const d = r.querySelector(".f_date")?.value;
+          if(!d) continue;
+          clauses.push(`substr(${colQ},1,10) ${op} ?`);
+          params.push(d);
+        }
+      }else{
+        if(op==="in"){
+          const sel = r.querySelector(".f_multi");
+          const chosen = sel ? Array.from(sel.selectedOptions).map(o=>o.value) : [];
+          if(!chosen.length) continue;
+          clauses.push(`${colQ} IN (${chosen.map(()=>"?").join(",")})`);
+          params.push(...chosen);
+        }else if(op==="contains"){
+          const v = r.querySelector(".f_text")?.value;
+          if(!v) continue;
+          clauses.push(`LOWER(CAST(${colQ} AS TEXT)) LIKE ?`);
+          params.push("%" + v.toLowerCase() + "%");
+        }else{
+          const v = r.querySelector(".f_text")?.value;
+          if(v === "" || v == null) continue;
+          clauses.push(`${colQ} = ?`);
+          params.push(v);
+        }
+      }
+    }
+
+    const where = clauses.length ? ("WHERE " + clauses.join(" AND ")) : "";
+    return { where, params };
+  }
+
+  // ---------- Charts ----------
+  let tsChart=null, histChart=null, sportChart=null, bookChart=null;
+
+  function destroyCharts(){
+    for(const c of [tsChart,histChart,sportChart,bookChart]){
+      if(c){ c.destroy(); }
+    }
+    tsChart=histChart=sportChart=bookChart=null;
+  }
+
+  function makeHistogram(values, bins=30){
+    const clean = values.filter(Number.isFinite);
+    if(!clean.length) return {labels:[], counts:[]};
+    let mn = Math.min(...clean), mx = Math.max(...clean);
+    if(mn === mx){ mn -= 0.5; mx += 0.5; }
+    const w = (mx - mn) / bins;
+    const counts = Array(bins).fill(0);
+    for(const v of clean){
+      let idx = Math.floor((v - mn) / w);
+      if(idx < 0) idx = 0;
+      if(idx >= bins) idx = bins-1;
+      counts[idx]++;
+    }
+    const labels = [];
+    for(let i=0;i<bins;i++){
+      const a = mn + i*w;
+      const b = a + w;
+      labels.push(`${a.toFixed(0)}..${b.toFixed(0)}`);
+    }
+    return {labels, counts};
+  }
+
+  function renderGraphs(filteredWhere, params){
+    if(!db) return;
+
+    const table = $("tableSelect").value;
+    const metric = $("metricSelect").value;
+
+    // We'll attempt to use these column names if present:
+    const hasDate  = columns.some(c=>c.name === "Date");
+    const hasSport = columns.some(c=>c.name === "Sport");
+    const hasBook  = columns.some(c=>c.name === "Book");
+
+    // Pull metric list (for histogram)
+    const metricQ = `"${metric.replaceAll('"','""')}"`;
+    const metricRows = queryAll(`SELECT ${metricQ} AS m FROM "${table.replaceAll('"','""')}" ${filteredWhere};`, params);
+    const vals = metricRows.map(r=>Number(r.m)).filter(Number.isFinite);
+
+    // Histogram
+    const h = makeHistogram(vals, 30);
+    histChart = new Chart($("histChart"), {
+      type: "bar",
+      data: { labels: h.labels, datasets: [{ label: "Count", data: h.counts }] },
+      options: { responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ maxRotation:90, minRotation:45 } } } }
+    });
+
+    // Time series cumulative by Date
+    if(hasDate){
+      $("tsNote").textContent = "";
+      const rows = queryAll(
+        `SELECT substr("Date",1,10) AS d, SUM(${metricQ}) AS s
+         FROM "${table.replaceAll('"','""')}"
+         ${filteredWhere}
+         GROUP BY d
+         ORDER BY d;`,
+        params
+      );
+      let cum = 0;
+      const labels = [];
+      const data = [];
+      for(const r of rows){
+        labels.push(r.d);
+        cum += Number(r.s) || 0;
+        data.push(cum);
+      }
+      tsChart = new Chart($("tsChart"), {
+        type: "line",
+        data: { labels, datasets: [{ label: "Cumulative", data, tension: 0.2, pointRadius: 0 }] },
+        options: { responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ maxRotation:45, minRotation:0 } } } }
+      });
+    } else {
+      $("tsNote").innerHTML = `<span class="warn">No "Date" column found in this table — time series chart disabled.</span>`;
+      const ctx = $("tsChart").getContext("2d");
+      ctx.clearRect(0,0,$("tsChart").width,$("tsChart").height);
+    }
+
+    // Sum by Sport
+    if(hasSport){
+      $("sportNote").textContent = "";
+      const rows = queryAll(
+        `SELECT "Sport" AS k, SUM(${metricQ}) AS s
+         FROM "${table.replaceAll('"','""')}"
+         ${filteredWhere}
+         GROUP BY k
+         ORDER BY s DESC;`,
+        params
+      );
+      const labels = rows.map(r=>String(r.k));
+      const data = rows.map(r=>Number(r.s)||0);
+      sportChart = new Chart($("sportChart"), {
+        type: "bar",
+        data: { labels, datasets: [{ label:"Sum", data }] },
+        options: { responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ maxRotation:45, minRotation:0 } } } }
+      });
+    } else {
+      $("sportNote").innerHTML = `<span class="warn">No "Sport" column found — sport chart disabled.</span>`;
+      const ctx = $("sportChart").getContext("2d");
+      ctx.clearRect(0,0,$("sportChart").width,$("sportChart").height);
+    }
+
+    // Sum by Book (top 15)
+    if(hasBook){
+      $("bookNote").textContent = "";
+      const rows = queryAll(
+        `SELECT "Book" AS k, SUM(${metricQ}) AS s
+         FROM "${table.replaceAll('"','""')}"
+         ${filteredWhere}
+         GROUP BY k
+         ORDER BY s DESC
+         LIMIT 15;`,
+        params
+      );
+      const labels = rows.map(r=>String(r.k));
+      const data = rows.map(r=>Number(r.s)||0);
+      bookChart = new Chart($("bookChart"), {
+        type: "bar",
+        data: { labels, datasets: [{ label:"Sum", data }] },
+        options: { responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ maxRotation:45, minRotation:0 } } } }
+      });
+    } else {
+      $("bookNote").innerHTML = `<span class="warn">No "Book" column found — book chart disabled.</span>`;
+      const ctx = $("bookChart").getContext("2d");
+      ctx.clearRect(0,0,$("bookChart").width,$("bookChart").height);
+    }
+  }
+
+  // ---------- Summary ----------
+  let lastWhere = "";
+  let lastParams = [];
+
+  function runSummary(){
+    if(!db){
+      setMsg("Load a SQLite DB first.", "warn");
+      setKPIs({count:NaN,sum:NaN,vol:NaN,sharpe:NaN});
+      $("previewTable").style.display = "none";
+      $("graphsBtn").disabled = true;
+      return;
+    }
+
+    const table = $("tableSelect").value;
+    const metric = $("metricSelect").value;
+
+    const { where, params } = buildWhereFromFilters();
+    lastWhere = where;
+    lastParams = params;
+
+    const metricQ = `"${metric.replaceAll('"','""')}"`;
+    const metricRows = queryAll(`SELECT ${metricQ} AS m FROM "${table.replaceAll('"','""')}" ${where};`, params);
+    const vals = metricRows.map(r=>Number(r.m)).filter(Number.isFinite);
+
+    const count = vals.length;
+    const sum = vals.reduce((a,b)=>a+b,0);
+    const m = mean(vals);
+    const vol = stdev(vals);
+    const sharpe = (Number.isFinite(m) && Number.isFinite(vol) && vol !== 0) ? (m/vol) : NaN;
+
+    setKPIs({count,sum,vol,sharpe});
+
+    if(!count){
+      setMsg("No rows match your filters.", "warn");
+      showPreview([]);
+      $("graphsBtn").disabled = true;
+      return;
+    }
+
+    setMsg(`Showing ${count.toLocaleString()} row(s) after filters.`, "ok");
+    $("graphsBtn").disabled = false;
+
+    const previewRows = queryAll(`SELECT * FROM "${table.replaceAll('"','""')}" ${where} LIMIT 25;`, params);
+    showPreview(previewRows);
+  }
+
+  // ---------- Wire up UI ----------
+  $("addFilterBtn").addEventListener("click", addFilter);
+  $("clearFiltersBtn").addEventListener("click", () => { clearFilters(); runSummary(); });
+
+  $("runBtn").addEventListener("click", () => {
+    // If graphs are open, close + destroy to keep UI responsive
+    $("graphs").style.display = "none";
+    $("graphsBtn").textContent = "Show Graphs";
+    destroyCharts();
+    runSummary();
+  });
+
+  $("graphsBtn").addEventListener("click", () => {
+    const g = $("graphs");
+    const open = g.style.display === "block";
+    if(open){
+      g.style.display = "none";
+      $("graphsBtn").textContent = "Show Graphs";
+      destroyCharts();
+      return;
+    }
+    // ensure summary is current
+    if(!db) return;
+    g.style.display = "block";
+    $("graphsBtn").textContent = "Hide Graphs";
+    destroyCharts();
+    renderGraphs(lastWhere, lastParams);
+  });
+
+  $("loadBtn").addEventListener("click", async () => {
+    const f = $("dbfile").files && $("dbfile").files[0];
+    if(!f){ $("dbStatus").innerHTML = `<span class="warn">No file selected.</span>`; return; }
+
+    try{
+      $("dbStatus").innerHTML = `<span class="muted">Loading…</span>`;
+      await loadDBFromFile(f);
+
+      const tables = listTables();
+      if(!tables.length) throw new Error("No user tables found in this DB.");
+
+      fillSelect($("tableSelect"), tables, tables.includes("bets") ? "bets" : tables[0]);
+
+      const t = $("tableSelect").value;
+      columns = getTableColumns(t);
+      columnTypes = inferColumnTypes(t, columns);
+
+      const colNames = columns.map(c=>c.name);
+      let preferredMetric = colNames.includes("Net") ? "Net" : null;
+      if(!preferredMetric){
+        const numCols = colNames.filter(n => columnTypes[n] === "number");
+        preferredMetric = numCols.length ? numCols[0] : colNames[0];
+      }
+      fillSelect($("metricSelect"), colNames, preferredMetric);
+
+      clearFilters();
+
+      $("dbStatus").innerHTML = `<span class="ok">DB loaded: ${esc(f.name)}</span>`;
+      setMsg("DB loaded. Add filters and click Run Summary.", "muted");
+      setKPIs({count:NaN,sum:NaN,vol:NaN,sharpe:NaN});
+      $("previewTable").style.display = "none";
+      $("graphs").style.display = "none";
+      $("graphsBtn").textContent = "Show Graphs";
+      $("graphsBtn").disabled = true;
+      destroyCharts();
+    }catch(e){
+      $("dbStatus").innerHTML = `<span class="err">Load failed: ${esc(e.message || String(e))}</span>`;
+      if(db){ try{ db.close(); }catch(_){ } db=null; }
+    }
+  });
+
+  $("tableSelect").addEventListener("change", () => {
+    if(!db) return;
+    const t = $("tableSelect").value;
+    columns = getTableColumns(t);
+    columnTypes = inferColumnTypes(t, columns);
+    fillSelect($("metricSelect"), columns.map(c=>c.name), columns.map(c=>c.name).includes("Net") ? "Net" : columns[0].name);
+    clearFilters();
+    $("graphs").style.display="none";
+    $("graphsBtn").textContent="Show Graphs";
+    $("graphsBtn").disabled=true;
+    destroyCharts();
+    setMsg("Table changed. Add filters and run summary.", "muted");
+    $("previewTable").style.display = "none";
+  });
+
+  $("resetBtn").addEventListener("click", () => {
+    if(db){ try{ db.close(); }catch(_){ } }
+    db=null; columns=[]; columnTypes={};
+    $("dbfile").value="";
+    $("dbStatus").textContent="";
+    $("tableSelect").innerHTML="";
+    $("metricSelect").innerHTML="";
+    clearFilters();
+    $("graphs").style.display="none";
+    $("graphsBtn").textContent="Show Graphs";
+    $("graphsBtn").disabled=true;
+    destroyCharts();
+    setMsg("Reset. Load a SQLite DB to begin.", "muted");
+    setKPIs({count:NaN,sum:NaN,vol:NaN,sharpe:NaN});
+    $("previewTable").style.display = "none";
+  });
+
+  // init early
+  initSqlJsOnce();
+  setMsg("Upload a SQLite DB, click “Load DB”, then add filters.", "muted");
+})();
+</script>
+</body>
+</html>
