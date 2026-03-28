@@ -128,6 +128,13 @@ Options:
 - Double-click `run.bat`
 - Results appear in the output Google Sheet
 
+### What to give him
+Only 4 files — zip and send. The notebook and analysis CSVs stay in your repo as reference; the cleaning/analysis logic is ported directly into `pipeline.py`.
+- `pipeline.py`
+- `client_secret.json`
+- `requirements.txt`
+- `run.bat`
+
 ### What's on your side (not his)
 - Google Cloud project creation
 - Enabling Sheets API and Drive API
