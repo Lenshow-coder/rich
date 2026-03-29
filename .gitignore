@@ -1,3 +1,6 @@
 __MACOSX/
 *.sqlite
 *.zip
+token.json
+client_secret.json
+pipeline.log
