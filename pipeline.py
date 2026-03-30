@@ -16,9 +16,17 @@ SOURCE_TAB_NAME   = "Bet Tracker"      # Tab within the source sheet
 OUTPUT_SHEET_URL  = "https://docs.google.com/spreadsheets/d/YOUR_OUTPUT_SHEET_ID/edit"
 SKIP_ROWS         = 6                  # Junk rows before the header row in the source sheet
 BETTYPE_COL_INDEX = 12                 # 0-based index of the unnamed BetType column
-SPORT_FILTER      = ["Basketball"]       # e.g. ["Basketball", "NFL", "NHL"]
-YEAR_FILTER       = [2026]               # e.g. [2025, 2026]
+SPORT_FILTER      = ["Basketball"]       # e.g. ["Basketball", "NFL", "NHL"] — empty list = all sports
+DATE_START        = "2026-01-01"          # Inclusive start date (YYYY-MM-DD)
+DATE_END          = "2026-12-31"          # Inclusive end date   (YYYY-MM-DD)
 BOOK_FILTER       = []                   # e.g. ["MBmb", "FDmb"] — empty list = all books
+
+# ─── Band configuration ──────────────────────────────────────
+ODDS_BANDS       = [-150, -100, 150]           # Weighted-stake summary
+FLAT_ODDS_BANDS  = [-150, -100, 150, 300]      # Flat-stake summary; bets outside the min/max are excluded
+EDGE_BANDS       = [0, 5, 10, 15]              # Edge % bands (used in both summaries)
+STAKE_BANDS      = [0, 500, 1000, 2000]        # Stake bands (weighted summary only)
+CORE_BET_TYPES   = ['moneyline', 'spread', 'total']  # Bet types shown in the Bet Type breakdown
 
 # ─── Logging ───────────────────────────────────────────────────
 logging.basicConfig(
@@ -28,6 +36,66 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 log.addHandler(logging.StreamHandler(sys.stdout))
+
+
+# ─── Band label helpers ───────────────────────────────────────
+
+def _make_bins_and_labels(edges, fmt="number", low_sentinel=True):
+    """Generate pd.cut bins and labels from user-facing edge values.
+
+    edges        — sorted list of boundary values, e.g. [-150, -100, 150]
+    fmt          — "odds"  : prefix positive values with +, no suffix
+                   "pct"   : append % to values
+                   "number": plain numbers (for stake bands etc.)
+    low_sentinel — if True, prepend -∞ and label the first bucket "X or less".
+                   if False, use edges[0] as the hard floor (for edge/stake bands
+                   where 0 is a real boundary, not a sentinel).
+
+    Returns (bins, labels) ready for pd.cut.
+    +∞ is always added for the last bucket.
+    """
+    def _fmt(v):
+        if fmt == "odds" and v > 0:
+            return f"+{int(v)}"
+        if fmt == "pct":
+            return f"{v}%"
+        return str(int(v))
+
+    if low_sentinel:
+        bins = [-999999] + list(edges) + [float('inf')]
+    else:
+        bins = list(edges) + [float('inf')]
+
+    labels = []
+    for i in range(len(bins) - 1):
+        lo, hi = bins[i], bins[i + 1]
+        if lo == -999999:
+            labels.append(f"{_fmt(hi)} or less")
+        elif hi == float('inf'):
+            labels.append(f"{_fmt(lo)} or greater")
+        else:
+            labels.append(f"{_fmt(lo)} to {_fmt(hi)}")
+    return bins, labels
+
+
+def _make_flat_bins_and_labels(edges, fmt="odds"):
+    """Like _make_bins_and_labels but without sentinel padding.
+
+    Used for flat-stake odds bands where the outer edges are real filter
+    boundaries, not sentinels.
+    """
+    def _fmt(v):
+        if fmt == "odds" and v > 0:
+            return f"+{int(v)}"
+        if fmt == "pct":
+            return f"{v}%"
+        return str(int(v))
+
+    bins = list(edges)
+    labels = []
+    for i in range(len(bins) - 1):
+        labels.append(f"{_fmt(bins[i])} to {_fmt(bins[i + 1])}")
+    return bins, labels
 
 
 # ─── Google Sheets I/O ─────────────────────────────────────────
@@ -209,11 +277,15 @@ def clean_data(df):
 
 def build_analysis_df(df):
     """Filter to sport/year and prepare analysis columns (mirrors notebook Cell 5)."""
-    mask = df['Sport'].isin(SPORT_FILTER) & df['Date'].dt.year.isin(YEAR_FILTER)
+    date_lo = pd.Timestamp(DATE_START)
+    date_hi = pd.Timestamp(DATE_END)
+    mask = df['Date'].between(date_lo, date_hi)
+    if SPORT_FILTER:
+        mask = mask & df['Sport'].isin(SPORT_FILTER)
     if BOOK_FILTER:
         mask = mask & df['Book'].isin(BOOK_FILTER)
     bdf = df[mask].copy()
-    log.info(f"Filtered to {SPORT_FILTER} {YEAR_FILTER} (books: {'all' if not BOOK_FILTER else BOOK_FILTER}): {len(bdf)} rows")
+    log.info(f"Filtered to sports={'all' if not SPORT_FILTER else SPORT_FILTER} {DATE_START}–{DATE_END} (books: {'all' if not BOOK_FILTER else BOOK_FILTER}): {len(bdf)} rows")
 
     if len(bdf) == 0:
         log.warning("No rows match the filter — check SPORT_FILTER / YEAR_FILTER / BOOK_FILTER")
@@ -321,25 +393,23 @@ def build_performance_summary(bdf, merged):
     blank = pd.DataFrame([{}])
 
     # By Odds Band
-    cdf['OddsBand'] = pd.cut(cdf['LineTaken'],
-                              bins=[-999999, -150, -100, 150, 999999],
-                              labels=['-150 or less', '-150 to -100', '+100 to +150', '+150 or greater'])
+    odds_bins, odds_labels = _make_bins_and_labels(ODDS_BANDS, fmt="odds")
+    cdf['OddsBand'] = pd.cut(cdf['LineTaken'], bins=odds_bins, labels=odds_labels)
     odds = _int_cols(cdf.groupby('OddsBand', observed=False)
                      .apply(_summarize_weighted, include_groups=False).reset_index()
                      .rename(columns={'OddsBand': 'Bucket'}))
     odds.insert(0, 'Group', 'Odds Band')
 
     # By Edge Band
-    cdf['EdgeBand'] = pd.cut(cdf['Edge'],
-                              bins=[0, 5, 10, 15, float('inf')],
-                              labels=['0-5%', '5-10%', '10-15%', '15%+'])
+    edge_bins, edge_labels = _make_bins_and_labels(EDGE_BANDS, fmt="pct", low_sentinel=False)
+    cdf['EdgeBand'] = pd.cut(cdf['Edge'], bins=edge_bins, labels=edge_labels)
     edge = _int_cols(cdf.groupby('EdgeBand', observed=False)
                      .apply(_summarize_weighted, include_groups=False).reset_index()
                      .rename(columns={'EdgeBand': 'Bucket'}))
     edge.insert(0, 'Group', 'Edge Band')
 
     # By BetType
-    core = cdf[cdf['BetType'].isin(['moneyline', 'spread', 'total'])]
+    core = cdf[cdf['BetType'].isin(CORE_BET_TYPES)]
     bettype = _int_cols(core.groupby('BetType')
                         .apply(_summarize_weighted, include_groups=False).reset_index()
                         .rename(columns={'BetType': 'Bucket'}))
@@ -352,9 +422,8 @@ def build_performance_summary(bdf, merged):
     # By Stake Band (from merged data)
     mdf = merged[merged['Grade'] != 'P'].copy()
     mdf['ExpProfit'] = (mdf['RichStake'] * mdf['Edge'] / 100).round(0).astype(int)
-    mdf['StakeBand'] = pd.cut(mdf['RichStake'],
-                               bins=[0, 500, 1000, 2000, float('inf')],
-                               labels=['0-500', '500-1000', '1000-2000', '2000+'])
+    stake_bins, stake_labels = _make_bins_and_labels(STAKE_BANDS, fmt="number", low_sentinel=False)
+    mdf['StakeBand'] = pd.cut(mdf['RichStake'], bins=stake_bins, labels=stake_labels)
     stake = _int_cols(mdf.groupby('StakeBand', observed=False)
                       .apply(_summarize_weighted, include_groups=False).reset_index()
                       .rename(columns={'StakeBand': 'Bucket'}))
@@ -369,7 +438,7 @@ def build_performance_summary(bdf, merged):
 def build_flat_stake_summary(merged):
     """Build flat-stake performance summary (mirrors notebook Cell 10)."""
     fdf = merged[~merged['Grade'].isin(['P', 'mix'])].copy()
-    fdf = fdf[(fdf['LineTaken'] > -150) & (fdf['LineTaken'] < 300)].copy()
+    fdf = fdf[(fdf['LineTaken'] > FLAT_ODDS_BANDS[0]) & (fdf['LineTaken'] < FLAT_ODDS_BANDS[-1])].copy()
     log.info(f"Flat stake analysis: {len(fdf)} bets after filtering")
 
     fdf['RichStake'] = 1
@@ -406,25 +475,23 @@ def build_flat_stake_summary(merged):
     blank = pd.DataFrame([{}])
 
     # By Odds Band (narrower range — extremes already filtered)
-    fdf['OddsBand'] = pd.cut(fdf['LineTaken'],
-                              bins=[-150, -100, 150, 300],
-                              labels=['-150 to -100', '+100 to +150', '+151 to +300'])
+    flat_odds_bins, flat_odds_labels = _make_flat_bins_and_labels(FLAT_ODDS_BANDS, fmt="odds")
+    fdf['OddsBand'] = pd.cut(fdf['LineTaken'], bins=flat_odds_bins, labels=flat_odds_labels)
     f_odds = int_cols_flat(fdf.groupby('OddsBand', observed=False)
                            .apply(summarize_flat, include_groups=False).reset_index()
                            .rename(columns={'OddsBand': 'Bucket'}))
     f_odds.insert(0, 'Group', 'Odds Band')
 
     # By Edge Band
-    fdf['EdgeBand'] = pd.cut(fdf['Edge'],
-                              bins=[0, 5, 10, 15, float('inf')],
-                              labels=['0-5%', '5-10%', '10-15%', '15%+'])
+    edge_bins, edge_labels = _make_bins_and_labels(EDGE_BANDS, fmt="pct", low_sentinel=False)
+    fdf['EdgeBand'] = pd.cut(fdf['Edge'], bins=edge_bins, labels=edge_labels)
     f_edge = int_cols_flat(fdf.groupby('EdgeBand', observed=False)
                            .apply(summarize_flat, include_groups=False).reset_index()
                            .rename(columns={'EdgeBand': 'Bucket'}))
     f_edge.insert(0, 'Group', 'Edge Band')
 
     # By BetType
-    core = fdf[fdf['BetType'].isin(['moneyline', 'spread', 'total'])]
+    core = fdf[fdf['BetType'].isin(CORE_BET_TYPES)]
     f_bettype = int_cols_flat(core.groupby('BetType')
                               .apply(summarize_flat, include_groups=False).reset_index()
                               .rename(columns={'BetType': 'Bucket'}))

@@ -4,3 +4,4 @@ __MACOSX/
 token.json
 client_secret.json
 pipeline.log
+__pycache__/

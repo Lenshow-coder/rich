@@ -144,11 +144,32 @@ Only 4 files — zip and send. The notebook and analysis CSVs stay in your repo 
 
 ## GUI for filter management
 
-Add a tkinter GUI so the user can adjust filters (sport, year, book) without editing `pipeline.py`. Sheet URLs stay hardcoded in the script — not part of the GUI.
+Add a tkinter GUI so the user can adjust filters (sport, date range, book) without editing `pipeline.py`. Sheet URLs stay hardcoded in the script — not part of the GUI. The GUI is split into two sections.
 
-- **Preset system:** A `presets.json` file stores named filter configurations (e.g. "Basketball 2026", "All Sports 2025-2026"). The GUI has a dropdown to pick a preset, which populates the filter fields. Users can save new presets and delete existing ones from the GUI.
-- **Settings persistence:** Last-used filters are saved automatically so they persist across runs.
-- **Run button:** Triggers the pipeline directly from the GUI with the selected filters.
+### Section 1 — Main Filters
+These control which data gets pulled into the analysis. Users will change these frequently.
+
+| Setting | Type | Description |
+|---|---|---|
+| **Sport** | Multi-select or comma-separated list | Which sports to include (e.g. Basketball, NFL, NHL). Only bets matching these sports are analyzed. |
+| **Date Range** | Two date fields (start, end) | Inclusive date range for filtering bets (e.g. 2026-01-01 to 2026-12-31). |
+| **Book** | Multi-select or comma-separated list | Which sportsbooks to include (e.g. MBmb, FDmb). Leave empty to include all books. |
+
+### Section 2 — Summary Bands (Advanced)
+These control how results are bucketed in the summary tables. They don't affect which data is included — only how it's grouped for display. Collapsed or in a separate tab since they rarely change.
+
+| Setting | Type | Description |
+|---|---|---|
+| **Odds Bands** | Comma-separated numbers | Bin edges for the weighted-stake summary. Extreme sentinels are added automatically. Default: `-150, -100, 150` → produces buckets "-150 or less", "-150 to -100", "+100 to +150", "+150 or greater". |
+| **Flat Odds Bands** | Comma-separated numbers | Bin edges for the flat-stake summary. Bets outside the min/max are excluded entirely. Default: `-150, -100, 150, 300` → produces buckets "-150 to -100", "-100 to +150", "+150 to +300". |
+| **Edge Bands** | Comma-separated numbers | Bin edges for grouping by edge percentage. Used in both summaries. Default: `0, 5, 10, 15` (with +∞ added automatically) → produces buckets "0-5%", "5-10%", "10-15%", "15%+". |
+| **Stake Bands** | Comma-separated numbers | Bin edges for grouping merged bets by total stake. Weighted summary only. Default: `0, 500, 1000, 2000` (with +∞ added automatically) → produces buckets "0-500", "500-1000", "1000-2000", "2000+". |
+
+
+### Other GUI features
+- **Preset system:** A `presets.json` file stores named filter configurations (e.g. "Basketball 2026", "All Sports 2025-2026"). The GUI has a dropdown to pick a preset, which populates all fields in both sections. Users can save new presets and delete existing ones from the GUI.
+- **Settings persistence:** Last-used settings (both sections) are saved automatically so they persist across runs.
+- **Run button:** Triggers the pipeline directly from the GUI with the selected settings.
 
 ## What to avoid
 - **Service accounts** — awkward to hand off credentials to another person
