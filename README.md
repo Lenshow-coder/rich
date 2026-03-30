@@ -4,17 +4,20 @@ Reads betting data from a Google Sheet, runs performance analysis, and writes re
 
 ## Setup
 
-1. **Install Python** from [python.org](https://www.python.org/downloads/) — check "Add Python to PATH" during install - (you've already done this)
-2. **Install dependencies** — open a terminal in this folder and run:
+1. **Install Python** — Mac comes with Python 3 pre-installed. To check, open Terminal and run `python3 --version`. If it's not installed, download from [python.org](https://www.python.org/downloads/)
+2. **Install dependencies** — open Terminal, `cd` into this folder, and run:
    ```
-   pip install -r requirements.txt
+   pip3 install -r requirements.txt
    ```
-   (you can just open this folder in VSCode, click the Terminal tab --> New Terminal, and run it there)
 3. **Edit `pipeline.py`** — paste your Google Sheet URLs into `SOURCE_SHEET_URL` and `OUTPUT_SHEET_URL` at the top of the file
 
 ## Running
 
-Double-click **`run.bat`**.
+Open Terminal, `cd` into this folder, and run:
+```
+./run.sh
+```
+If you get a "permission denied" error on the first try, run `chmod +x run.sh` first, then `./run.sh` again.
 
 On first run, a browser window will open asking you to sign in with Google. You'll see an "This app isn't verified" warning — click **Advanced > Go to [app name]** to proceed. This is a one-time step; a `token.json` is saved locally for future runs.
 

@@ -142,6 +142,14 @@ Only 4 files — zip and send. The notebook and analysis CSVs stay in your repo 
 - Publishing the app to Production
 - Handing him the `client_secret.json` + project folder
 
+## GUI for filter management
+
+Add a tkinter GUI so the user can adjust filters (sport, year, book) without editing `pipeline.py`. Sheet URLs stay hardcoded in the script — not part of the GUI.
+
+- **Preset system:** A `presets.json` file stores named filter configurations (e.g. "Basketball 2026", "All Sports 2025-2026"). The GUI has a dropdown to pick a preset, which populates the filter fields. Users can save new presets and delete existing ones from the GUI.
+- **Settings persistence:** Last-used filters are saved automatically so they persist across runs.
+- **Run button:** Triggers the pipeline directly from the GUI with the selected filters.
+
 ## What to avoid
 - **Service accounts** — awkward to hand off credentials to another person
 - **Scheduled runs (Task Scheduler)** — unnecessary; on-demand via `run.bat` is simpler and avoids wake/sleep issues
