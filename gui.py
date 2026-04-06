@@ -10,9 +10,26 @@ import logging
 import json
 import os
 import sys
+import platform
 from datetime import datetime
 
 import pipeline
+
+# ─── Platform-aware fonts ──────────────────────────────────────
+if platform.system() == "Darwin":
+    UI_FONT = (".AppleSystemUIFont", 9)
+    UI_FONT_BOLD = (".AppleSystemUIFont", 10, "bold")
+    MONO_FONT = ("Menlo", 9)
+elif platform.system() == "Windows":
+    UI_FONT = ("Segoe UI", 9)
+    UI_FONT_BOLD = ("Segoe UI", 10, "bold")
+    MONO_FONT = ("Consolas", 9)
+else:
+    UI_FONT = ("sans-serif", 9)
+    UI_FONT_BOLD = ("sans-serif", 10, "bold")
+    MONO_FONT = ("monospace", 9)
+
+IS_MAC = platform.system() == "Darwin"
 
 PRESETS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presets.json")
 
@@ -59,10 +76,12 @@ class _ToolTip:
         tw.wm_overrideredirect(True)
         tw.wm_geometry(f"+{x}+{y}")
         # Outer frame acts as a rounded-look border
-        outer = tk.Frame(tw, background="#c8c8c8", padx=1, pady=1)
+        border_color = "#b0b0b0" if IS_MAC else "#c8c8c8"
+        tip_bg = "#fefed6" if IS_MAC else "#ffffff"
+        outer = tk.Frame(tw, background=border_color, padx=1, pady=1)
         outer.pack()
-        label = tk.Label(outer, text=self._text, background="#ffffff", foreground="#444",
-                         font=("Segoe UI", 9), relief="flat", borderwidth=0,
+        label = tk.Label(outer, text=self._text, background=tip_bg, foreground="#444",
+                         font=UI_FONT, relief="flat", borderwidth=0,
                          padx=10, pady=6, wraplength=280, justify="left")
         label.pack()
 
@@ -164,23 +183,33 @@ class App(tk.Tk):
         self.title("Pipeline Settings")
         self.resizable(True, True)
         self.minsize(520, 480)
-        self.configure(bg="#f0f0f0")
 
-        # Use a modern ttk theme
+        # Use a platform-appropriate ttk theme
         style = ttk.Style(self)
-        style.theme_use("clam")
+        if IS_MAC:
+            style.theme_use("aqua")
+        else:
+            style.theme_use("clam")
+
+        # Derive background color from the theme rather than hardcoding
+        bg = style.lookup("TFrame", "background") or "#f0f0f0"
+        self.configure(bg=bg)
 
         # Custom styles
-        style.configure("TFrame", background="#f0f0f0")
-        style.configure("TLabel", background="#f0f0f0", font=("Segoe UI", 9))
+        style.configure("TFrame", background=bg)
+        style.configure("TLabel", background=bg, font=UI_FONT)
         style.configure("TEntry", padding=4)
-        style.configure("Heading.TLabel", background="#f0f0f0",
-                         font=("Segoe UI", 10, "bold"), foreground="#333")
-        style.configure("TButton", font=("Segoe UI", 9), padding=(10, 4))
-        style.configure("Run.TButton", font=("Segoe UI", 10, "bold"), padding=(16, 6))
+        style.configure("Heading.TLabel", background=bg,
+                         font=UI_FONT_BOLD, foreground="#333")
+        style.configure("TButton", font=UI_FONT, padding=(10, 4))
+        style.configure("Run.TButton", font=UI_FONT_BOLD, padding=(16, 6))
         style.map("Run.TButton",
                   background=[("active", "#1a6bb5"), ("!disabled", "#1a7fd4")],
                   foreground=[("!disabled", "#fff")])
+        # Visible focus ring on entry fields
+        style.map("TEntry",
+                  lightcolor=[("focus", "#66afe9")],
+                  bordercolor=[("focus", "#66afe9")])
 
         self.entries = {}  # field_name -> tk.StringVar
         self._running = False
@@ -267,7 +296,7 @@ class App(tk.Tk):
         log_frame.pack(fill="both", expand=True, **pad)
 
         self.log_text = tk.Text(log_frame, height=12, state="disabled", wrap="word",
-                                font=("Consolas", 9), bg="#1e1e1e", fg="#d4d4d4",
+                                font=MONO_FONT, bg="#1e1e1e", fg="#d4d4d4",
                                 insertbackground="#d4d4d4", selectbackground="#264f78",
                                 relief="flat", borderwidth=0, padx=6, pady=6)
         scrollbar = ttk.Scrollbar(log_frame, orient="vertical", command=self.log_text.yview)
@@ -421,7 +450,8 @@ class _PromptDialog(tk.Toplevel):
     def __init__(self, parent, title, prompt, default=""):
         super().__init__(parent)
         self.title(title)
-        self.configure(bg="#f0f0f0")
+        bg = ttk.Style(self).lookup("TFrame", "background") or "#f0f0f0"
+        self.configure(bg=bg)
         self.result = None
         self.transient(parent)
         self.grab_set()
